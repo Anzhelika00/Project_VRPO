@@ -54,4 +54,42 @@ void game()
             cout << "Ответьте буквой y(если хотите взять) или n(если хотите стопнуть)!\n";
         }
     }
+    dealer::print_dealer_cards(dealer_cards, dealer_total);
+    if (bust)
+    {
+        if (dealer_total > 21)
+        {
+            cout << "Ничья! ”У вас и у дилера перебор.\n";
+        }
+        else
+        {
+        cout << "Тебя разорили! Дилер выигрывает.\n";
+    }
+}
+    else
+    {
+        if (player_total == 21)
+        {
+            cout << "Блэкджек! Вы выиграли.\n";
+            return;
+        }
+        
+        if (dealer_total > 21)
+        {
+            cout << "Дилер разорен! Вы выиграли!\n";
+        }
+        else if (dealer_total > player_total)
+        {
+            cout << "У дилера рука лучше, чем у вас. Дилер выигрывает.\n";
+        }
+        else if (dealer_total == player_total)
+        {
+            cout << "Ничья! У вас и у дилера одинаковая сумма.\n";
+        }
+        else
+        {
+            cout << "У вас лучше рука, чем у дилера. Вы выиграли.\n";
+        }
+    }
+}
 }
