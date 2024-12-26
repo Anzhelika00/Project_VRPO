@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../Downloads/dealer.hpp"
 using namespace std;
 
 void game()
