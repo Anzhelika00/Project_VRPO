@@ -15,4 +15,15 @@ using namespace std;
 
         return cards;
     }
+    int get_card_values(vector<int> cards)
+    {
+        int total = 0;
+
+        for (const int card : cards)
+        {
+            total += card;
+        }
+
+        return total;
+    }
 }
