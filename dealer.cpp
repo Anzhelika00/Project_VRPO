@@ -26,4 +26,36 @@ using namespace std;
 
         return total;
     }
+      void display_card_value(int card)
+    {
+        if (card == 1)
+        {
+            cout << "A\n";
+        }
+        else if (card > 1 && card < 10)
+        {
+            cout << card << '\n';
+        }
+        else
+        {
+            int chance = rand() % 101;
+
+            if (chance < 10)
+            {
+                cout << "10\n";
+            }
+            else if (chance < 30)
+            {
+                cout << "J\n";
+            }
+            else if (chance < 60)
+            {
+                cout << "Q\n";
+            }
+            else
+            {
+                cout << "K\n";
+            }
+        }
+    }
 }
