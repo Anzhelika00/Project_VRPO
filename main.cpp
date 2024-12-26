@@ -92,4 +92,24 @@ void game()
         }
     }
 }
+int main()
+{
+    setlocale(LC_CTYPE, "rus");
+    srand(time(NULL));
+    bool is_running = true;
+
+    while (is_running)
+    {
+        game();
+
+        char answer;
+        cout << "Вы хотите выйти ? (Y/N): ";
+        cin >> answer;
+        if (answer == 'y' || answer == 'Y')
+            is_running = false;
+        else
+            cout << "\n\n";
+    }
+
+    return 0;
 }
