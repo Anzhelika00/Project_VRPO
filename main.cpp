@@ -15,4 +15,14 @@ void game()
     }
     cout << "Ваша общая сумма: " << player_total  << '\n';
 
+    bool bust = false;
+
+    while (bust == false)
+    {   
+
+        if (player_total == 21)
+        {
+            break;
+        }
+
 }
