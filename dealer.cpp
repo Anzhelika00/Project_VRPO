@@ -58,4 +58,15 @@ using namespace std;
             }
         }
     }
+     void print_dealer_cards(vector<int> cards, int dealer_total)
+    {
+
+        cout << " Карты дилера : \n";
+
+        for (const int card : cards)
+        {
+            dealer::display_card_value(card);
+        }
+        cout << "Сумма дилера: " << dealer_total << '\n';
+    }
 }
