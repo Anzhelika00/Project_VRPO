@@ -25,4 +25,33 @@ void game()
             break;
         }
 
+         cout << "взять еще (y) или стоп(n)?  " << player_total  << '\n';
+        char answer;
+        cin >> answer;
+
+        if (answer == 'n')
+        {
+            break;
+        }
+        else if (answer == 'y')
+        {
+            int card = dealer::get_random_card();
+
+            cout << "Ваша карта: ";
+            dealer::display_card_value(card);
+
+            player_cards.push_back(card);
+            player_total = dealer::get_card_values(player_cards);
+            cout << "Ваша общая сумма сейчас составляет: " << player_total  << '\n';
+            
+            if (player_total > 21)
+            {
+                bust = true;
+            }
+        }
+        else if (answer != 'y' || answer != 'n')
+        {
+            cout << "Ответьте буквой y(если хотите взять) или n(если хотите стопнуть)!\n";
+        }
+    }
 }
