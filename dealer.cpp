@@ -1,3 +1,4 @@
+#include "../Downloads/dealer.hpp"
 using namespace std;
 {
     int get_random_card()
