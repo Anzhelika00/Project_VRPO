@@ -1,0 +1,50 @@
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <map>
+#include <algorithm>
+#include <Windows.h>
+
+using namespace std;
+using namespace sf;
+
+namespace dealer {
+    // Структура для карты
+    struct Card {
+        string value;  // 2-10, J, Q, K, A
+        string suit;   // D, H, S, C
+    };
+
+    map<string, Texture> card_textures;
+    vector<Card> full_deck;
+    vector<Card> current_deck;
+
+    void reset_deck() {
+        current_deck = full_deck;
+        random_shuffle(current_deck.begin(), current_deck.end());
+    }
+
+    void initialize_deck() {
+        vector<string> values = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+        vector<string> suits = { "D", "H", "S", "C" };
+
+
+
+int main() {
+    setlocale(LC_ALL, "en_US.UTF-8");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    srand(static_cast<unsigned int>(time(NULL)));
+
+    RenderWindow window(VideoMode(1280, 900), "Blackjack");
+    window.setFramerateLimit(60);
+
+    dealer::initialize_deck(); // Инициализация колоды
+
+
+    return 0;
+}
