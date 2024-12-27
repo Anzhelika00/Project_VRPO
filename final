@@ -123,6 +123,10 @@ public:
     bool isClicked(Vector2i mousePos) {
         return button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
     }
+private:
+    RectangleShape button;
+    Text buttonText;
+};
 
 int main() {
     setlocale(LC_ALL, "en_US.UTF-8");
