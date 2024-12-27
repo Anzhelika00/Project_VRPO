@@ -127,6 +127,11 @@ private:
     RectangleShape button;
     Text buttonText;
 };
+void reset_game(vector<dealer::Card>& dealer_cards, vector<dealer::Card>& player_cards, bool& gameEnded) {
+    dealer_cards.clear();
+    player_cards = { dealer::draw_card(), dealer::draw_card() };
+    gameEnded = false;
+}
 
 int main() {
     setlocale(LC_ALL, "en_US.UTF-8");
