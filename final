@@ -101,6 +101,28 @@ Card draw_card() {
         return Sprite();
     }
 }
+class Button {
+public:
+    Button(const string& text, float x, float y, Font& font, const Texture& buttonTexture) {
+        button.setSize(Vector2f(300, 100));
+        button.setPosition(x, y);
+        button.setTexture(&buttonTexture);
+
+        buttonText.setFont(font);
+        buttonText.setString(text);
+        buttonText.setCharacterSize(24);
+        buttonText.setFillColor(Color::White);
+        buttonText.setPosition(x + 10, y + 30);
+    }
+
+    void draw(RenderWindow& window) {
+        window.draw(button);
+        window.draw(buttonText);
+    }
+
+    bool isClicked(Vector2i mousePos) {
+        return button.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+    }
 
 int main() {
     setlocale(LC_ALL, "en_US.UTF-8");
