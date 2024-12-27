@@ -195,6 +195,88 @@ Texture button_texture;
                 }
             }
         }
+window.clear(Color(100, 100, 100));
+
+        // Отрисовка карт игрока
+        int x = 25;
+        int y = 60;
+        for (size_t i = 0; i < player_cards.size(); i++) {
+            Sprite card_sprite = dealer::get_card_sprite(player_cards[i]);
+            card_sprite.setPosition(x + (i * (card_sprite.getGlobalBounds().width * 0.5f)), y);
+            window.draw(card_sprite);
+        }
+
+        Text text;
+        text.setFont(font);
+        text.setCharacterSize(24);
+        text.setFillColor(Color::Green);
+        text.setString("Your Card Value: " + to_string(dealer::get_card_values(player_cards)));
+        text.setPosition(25, 15);
+        window.draw(text);
+
+        if (gameEnded) {
+            Text resultText;
+            resultText.setFont(font);
+            resultText.setCharacterSize(64);
+            resultText.setPosition(400, 320);
+
+            int dealer_total = dealer::get_card_values(dealer_cards);
+            int player_total = dealer::get_card_values(player_cards);
+
+            // Отрисовка карт дилера
+            int x_card_dealer = 25;
+            int y_card_dealer = 550;
+            for (size_t i = 0; i < dealer_cards.size(); i++) {
+                Sprite card_sprite = dealer::get_card_sprite(dealer_cards[i]);
+                card_sprite.setPosition(x_card_dealer + (i * (card_sprite.getGlobalBounds().width * 0.5f)), y_card_dealer);
+                window.draw(card_sprite);
+            }
+
+            Text dealer_text;
+            dealer_text.setFont(font);
+            dealer_text.setCharacterSize(24);
+            dealer_text.setFillColor(Color::Red);
+            dealer_text.setString("Dealer's Cards: " + to_string(dealer_total));
+            dealer_text.setPosition(25, 500);
+            window.draw(dealer_text);
+
+            // Логика определения победителя остается прежней
+            if (player_total == 21) {
+                resultText.setFillColor(Color::Green);
+                resultText.setString("You win! (Blackjack)");
+            }
+            else if (player_total > 21) {
+                if (dealer_total > 21) {
+                    resultText.setFillColor(Color::White);
+                    resultText.setString("It's a tie!");
+                }
+                else {
+                    resultText.setFillColor(Color::Red);
+                    resultText.setString("You lost! (Bust)");
+                }
+            }
+            else if (dealer_total > 21 || player_total > dealer_total) {
+                resultText.setFillColor(Color::Green);
+                resultText.setString("You win!");
+            }
+            else if (player_total < dealer_total) {
+                resultText.setFillColor(Color::Red);
+                resultText.setString("You lost!");
+            }
+            else {
+                resultText.setFillColor(Color::White);
+                resultText.setString("It's a tie!");
+            }
+
+            window.draw(resultText);
+            restartButton.draw(window);
+        }
+
+        hitButton.draw(window);
+        standButton.draw(window);
+
+        window.display();
+    }
 
 
     return 0;
