@@ -32,7 +32,75 @@ namespace dealer {
         vector<string> values = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
         vector<string> suits = { "D", "H", "S", "C" };
 
+// Создаем полную колоду и загружаем текстуры
+        for (const auto& value : values) {
+            for (const auto& suit : suits) {
+                full_deck.push_back({ value, suit });
+                Texture texture;
+                string filename = "/" + value + suit + ".jpg";
+                if (texture.loadFromFile(filename)) {
+                    card_textures[value + suit] = texture;
+                }
+            }
+        }
 
+        reset_deck();
+    }
+Card draw_card() {
+        if (current_deck.empty()) {
+            reset_deck();
+        }
+        Card card = current_deck.back();
+        current_deck.pop_back();
+        return card;
+    }
+
+    int get_card_value(const Card& card) {
+        if (card.value == "A") return 11;
+        if (card.value == "K"  card.value == "Q"  card.value == "J") return 10;
+        return stoi(card.value);
+    }
+
+    int get_card_values(const vector<Card>& cards) {
+        int total = 0;
+        int aces = 0;
+
+        for (const Card& card : cards) {
+            if (card.value == "A") {
+                aces++;
+                total += 11;
+            }
+            else {
+                total += get_card_value(card);
+            }
+        }
+
+        while (total > 21 && aces > 0) {
+            total -= 10;
+            aces--;
+        }
+
+        return total;
+    }
+
+    vector<Card> generate_dealer_cards() {
+        vector<Card> cards = { draw_card(), draw_card() };
+        while (get_card_values(cards) < 17) {
+            cards.push_back(draw_card());
+        }
+        return cards;
+    }
+
+    Sprite get_card_sprite(const Card& card) {
+        string key = card.value + card.suit;
+        if (card_textures.find(key) != card_textures.end()) {
+            Sprite sprite(card_textures[key]);
+            sprite.setScale(0.5f, 0.5f);
+            return sprite;
+        }
+        return Sprite();
+    }
+}
 
 int main() {
     setlocale(LC_ALL, "en_US.UTF-8");
