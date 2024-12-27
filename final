@@ -144,6 +144,58 @@ int main() {
 
     dealer::initialize_deck(); // Инициализация колоды
 
+Texture button_texture;
+    if (!button_texture.loadFromFile("/texture.png")) {
+        cerr << "Error loading button texture" << endl;
+        return -1;
+    }
+
+    vector<dealer::Card> dealer_cards;
+    vector<dealer::Card> player_cards = { dealer::draw_card(), dealer::draw_card() };
+
+    Font font;
+    if (!font.loadFromFile("/arial.ttf")) {
+        cerr << "Error loading font" << endl;
+        return -1;
+    }
+
+    Button hitButton("Hit", 25, 800, font, button_texture);
+    Button standButton("Stand", 335, 800, font, button_texture);
+    Button restartButton("Restart", 470, 400, font, button_texture);
+    bool gameEnded = false;
+
+    while (window.isOpen()) {
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) {
+                window.close();
+            }
+            else if (event.type == Event::MouseButtonPressed) {
+                if (event.mouseButton.button == Mouse::Left) {
+                    Vector2i mousePos = Mouse::getPosition(window);
+
+                    if (hitButton.isClicked(mousePos) && !gameEnded) {
+                        player_cards.push_back(dealer::draw_card());
+                        if (dealer::get_card_values(player_cards) >= 21) {
+                            gameEnded = true;
+                        }
+                    }
+
+                    if (standButton.isClicked(mousePos) && !gameEnded) {
+                        gameEnded = true;
+                    }
+
+                    if (restartButton.isClicked(mousePos) && gameEnded) {
+                        reset_game(dealer_cards, player_cards, gameEnded);
+                    }
+
+                    if (gameEnded && dealer_cards.empty()) {
+                        dealer_cards = dealer::generate_dealer_cards();
+                    }
+                }
+            }
+        }
+
 
     return 0;
 }
